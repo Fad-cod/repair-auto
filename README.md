@@ -39,8 +39,8 @@ usb-ntfs-auto-mount/
 ## 🚀 Installation rapide
 
 ```bash
-# Aller dans le dossier
-cd ~/Bureau/usb-ntfs-auto-mount/
+# Aller dans le dossier usb-ntfs-auto-mount et ouvrez le terminal
+
 
 # Lancer l'installation (détecte ton utilisateur automatiquement)
 sudo ./usb-install.sh
