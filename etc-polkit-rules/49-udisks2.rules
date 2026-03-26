@@ -1,0 +1,14 @@
+// Autoriser l'utilisateur fadele à monter des périphériques sans authentification
+// Cette règle polkit permet à udisks2 de monter les périphériques USB sans demander
+// d'authentification à l'utilisateur fadele.
+//
+// Installation:
+//   sudo cp 49-udisks2.rules /etc/polkit-1/rules.d/
+//   sudo systemctl restart polkit
+
+polkit.addRule(function(action, subject) {
+    if (action.id.indexOf("org.freedesktop.udisks2.filesystem-mount") === 0 &&
+        subject.user === "fadele") {
+        return polkit.Result.YES;
+    }
+});

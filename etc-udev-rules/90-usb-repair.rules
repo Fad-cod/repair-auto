@@ -1,0 +1,11 @@
+# Règle USB: Bloque udisks2 et lance la réparation + montage
+# UDISKS_AUTO=0 empêche udisks2 de monter pendant la réparation
+# ID_BUS=="usb" filtre UNIQUEMENT les périphériques USB (pas les disques internes)
+#
+# Installation:
+#   sudo cp 90-usb-repair.rules /etc/udev/rules.d/
+#   sudo udevadm control --reload-rules
+
+ACTION=="add", SUBSYSTEM=="block", KERNEL=="sd[a-z][0-9]", ENV{ID_BUS}=="usb", ENV{ID_FS_TYPE}=="ntfs*", ENV{UDISKS_AUTO}="0", RUN+="/usr/bin/systemd-run --unit=usb-ntfs-repair-%k /usr/local/bin/usb-ntfs-repair.sh /dev/%k"
+ACTION=="add", SUBSYSTEM=="block", KERNEL=="sd[a-z][0-9]", ENV{ID_BUS}=="usb", ENV{ID_FS_TYPE}=="vfat", ENV{UDISKS_AUTO}="0", RUN+="/usr/bin/systemd-run --unit=usb-ntfs-repair-%k /usr/local/bin/usb-ntfs-repair.sh /dev/%k"
+ACTION=="add", SUBSYSTEM=="block", KERNEL=="sd[a-z][0-9]", ENV{ID_BUS}=="usb", ENV{ID_FS_TYPE}=="exfat", ENV{UDISKS_AUTO}="0", RUN+="/usr/bin/systemd-run --unit=usb-ntfs-repair-%k /usr/local/bin/usb-ntfs-repair.sh /dev/%k"

@@ -1,0 +1,8 @@
+# Règle USB: Gère le retrait des clés USB
+# Déclenche une notification et nettoie le montage quand une clé est retirée
+#
+# Installation:
+#   sudo cp 91-usb-remove.rules /etc/udev/rules.d/
+#   sudo udevadm control --reload-rules
+
+ACTION=="remove", SUBSYSTEM=="block", KERNEL=="sd[a-z][0-9]", ENV{ID_BUS}=="usb", RUN+="/usr/bin/systemd-run --uid=1000 --gid=1000 --setenv=DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus /usr/local/bin/usb-unmount-user.sh /dev/%k"
